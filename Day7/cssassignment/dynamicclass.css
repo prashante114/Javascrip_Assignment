@@ -1,0 +1,22 @@
+td {
+    border: 1px solid black;
+  }
+
+.c1 {
+    background-color:yellow;
+    font-family: 'Courier New', Courier, monospace;
+    color: tomato;
+}
+.it {
+    background-color:red;
+}
+.hr {
+    background-color:yellow;
+}
+.sales {
+    background-color:cyan;
+}
+.accounts {
+    background-color:black;
+    color: white;
+}   

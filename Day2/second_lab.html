@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Page Title</title>
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 200px;
+        }
+    </style>
+    <script>
+         window.onload = function(){
+        }
+        function count()
+            {
+                var para_string = document.getElementById("str").innerHTML;
+                var count_string =  document.getElementById("count_string").value
+                var count = para_string.split(count_string).length - 1
+                var index_string = para_string.split(' ')
+                var insex_count = index_string.indexOf(count_string)
+                var indices = []
+                while (insex_count != -1) {
+                    indices.push(insex_count);
+                    insex_count = index_string.indexOf(count_string, insex_count + 1);
+                }
+                var result_string = count_string + " this word occures in string by "+count+" times and there indexes are :"+indices
+                document.getElementById("result").innerText = result_string;
+
+            }
+            function vowel_count(){
+                var indices = []
+                var para_string = document.getElementById("str").innerHTML;
+                var vowel_count = 0
+                var i = 0
+                const vowel = ['a','e','i','o','u','A','E','I','O','U']
+                for (let char of para_string ){
+                    if(vowel.includes(char)){
+                        vowel_count++
+                        indices.push(i);
+                    }
+                    i++
+                }
+                var result_string = "Count of Vowel in string is "+vowel_count+" and there indexes are :\n"+indices
+                document.getElementById("result").innerText = result_string;
+
+            }
+            
+            function get_statement_count(){
+                var para_string = document.getElementById("str").innerHTML;
+                var statement_string = para_string.split('.');
+                var result_string = "Statement count in string is "+statement_string.length
+                document.getElementById("result").innerText = result_string;
+            }
+            function get_titleCase(){
+                var para_string = document.getElementById("str").innerHTML;
+                str = para_string.toLowerCase().split(' ');
+                for (var i = 0; i < str.length; i++) {
+                    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+                }
+                result = str.join(' ');
+                document.getElementById("result").innerText = result;
+            }
+            function get_reverseString(){
+                var para_string = document.getElementById("str").innerHTML;
+                result = para_string.split("").reverse().join("");
+                document.getElementById("result").innerText = result;
+
+            }
+            function get_numeric_count(){
+                var indices = []
+                var para_string = document.getElementById("str").innerHTML;
+                var number = para_string.match(/[+-]?\d+(\.\d+)?/g)
+                for (i=0;i<number.length;i++){
+                    indices.push(para_string.indexOf(number[i]));
+                }
+                var result= "Number value in string is "+number + " And there indexes are :"+indices
+                document.getElementById("result").innerText = result;
+
+            }
+            
+
+    </script>
+</head>
+<body>
+    <table class="table table-bordered">
+        <td colspan="1"><div id="str">The James Bond series focuses on a fictional British Secret Service agent created in 1953 by writer Ian Fleming, who featured him in twelve novels and two short-story collections. Since Fleming's death in 1964, eight other authors have written authorised Bond novels or novelisations: Kingsley Amis, Christopher Wood, John Gardner, Raymond Benson, Sebastian Faulks, Jeffery Deaver, William Boyd and Anthony Horowitz. The latest novel is Forever and a Day by Anthony Horowitz, published in May 2018. Additionally Charlie Higson wrote a series on a young James Bond, and Kate Westbrook wrote three novels based on the diaries of a recurring series character, Moneypenny.</br>
+                        The character—also known by the code number 007 (pronounced "double-O-seven")—has also been adapted for television, radio, comic strip, video games and film. The films are the longest continually running film series of all time and have grossed over US$7.04 billion in total, making it the sixth-highest-grossing film series to date, which started in 1962 with Dr. No, starring Sean Connery as Bond. As of 2021, there have been twenty-four films in the Eon Productions series. The most recent Bond film, Spectre (2015), stars Daniel Craig in his fourth portrayal of Bond; he is the sixth actor to play Bond in the Eon series. There have also been two independent productions of Bond films: Casino Royale (a 1967 spoof starring David Niven) and Never Say Never Again (a 1983 remake of an earlier Eon-produced film, 1965's Thunderball, both starring Connery). In 2015 the series was estimated to be worth $19.9 billion,[1] making James Bond one of the highest-grossing media franchises of all time.</div></td>
+        
+        <tr>
+            <td><p id="result"></p></td>
+            
+        </tr>
+        <tr>
+            <td><input type="text" id="count_string"/ placeholder="Enter A word"></td>
+
+        </tr>
+        
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-md-2"><input type="button"  class="btn btn-primary" value="Count" onclick="count()"/></div>
+                    <div class="col-md-2"><input type="button"  class="btn btn-primary" value="Vowel" onclick="vowel_count()"/></div>
+                    <div class="col-md-2"><input type="button" class="btn btn-success" value="Title Case" onclick="get_titleCase()"/></div>
+                    <div class="col-md-2"><input type="button" class="btn btn-success" value="Statement" onclick="get_statement_count()"/></div>
+                    <div class="col-md-2"><input type="button" class="btn btn-warning" value="Reverse" onclick="get_reverseString()"/></div>
+                    <div class="col-md-2"><input type="button" class="btn btn-warning" value="Find Number" onclick="get_numeric_count()"/></div>
+              </div>
+            </td>
+          
+        </tr>
+       
+    </table>
+</body>
+</html>

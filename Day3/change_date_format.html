@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+         window.onload = function(){
+            document.getElementById("string_name").style.visibility = "hidden";
+
+        }
+         function date_format(){
+            var ip_string = document.getElementById("input_array").value;
+            var dt1 = new Date(ip_string);
+            var date = ""
+            const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const day = ["Monday", "Tuesday", "Wednesday","Thursday", "Friday", "Saturday", "Sunday"];
+            if ((dt1.getDate()) == 1){
+                var date = dt1.getDate()+'<sup>st</sup>'
+            }
+            else if ((dt1.getDate()) == 2){
+                var date = dt1.getDate()+'<sup>nd</sup>'
+            }
+            else if ((dt1.getDate()) == 3){
+                var date = dt1.getDate()+'<sup>rd</sup>'
+            }
+            else{
+                var date = dt1.getDate()+'<sup>th</sup>'
+            }
+            var date_foarmat = day[dt1.getDay()]+", "+date+" "+months[dt1.getMonth()]+", "+dt1.getFullYear()
+            document.getElementById("string_name").style.visibility = "visible";
+            document.getElementById("result").innerHTML  = date_foarmat;
+           
+        }
+
+    </script>
+</head>
+
+<body>
+    <div align="center">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">
+                Date Format
+            </div>
+            <div class="card-body">
+            <div class="card-title"><input type="date" id="input_array" placeholder="Enter a Date"></div>
+            <input type="button" class="btn btn-warning" value="Change Date Format" onclick="date_format()">
+            <div class="card-title" id ="string_name"><h5>Changed Date Format</h5></div>
+            <div class="card-title" id ="result"></div>
+            </div>
+            <div class="card-footer text-muted">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

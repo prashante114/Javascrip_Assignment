@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./EmployeeFormLogic.js"></script>
+    <script src="./validate.js"></script>
+    <script>
+        function presenter(){
+            empLogic = new EmployeeLogic();
+            validate = new ValidateForm();
+            emp_list = empLogic.getEmployees();
+            document.getElementById('empno').addEventListener('keyup', function(){
+                return_val = validate.checkNumeric(this.value)
+
+               
+            },false);
+            document.getElementById('empname').addEventListener('keyup', function(){
+                validate.checkChar(this.value)
+            },false);
+            document.getElementById('empsal').addEventListener('keyup', function(){
+                validate.NotNegative(this.value)
+            },false);
+
+            //added click listner
+            document.getElementById('btnsave').addEventListener('click',SaveForm,false);
+            document.getElementById('delbtn').addEventListener('click',RemoveData,false);
+            document.getElementById('btnclear').addEventListener('click',clearInputs,false);
+            document.getElementById('btnupdate').addEventListener('click',updatedata,false);
+
+        };
+        window.onload = presenter;
+        function SaveForm(){
+            var emp = document.getElementById("empname").value;
+            var empno = document.getElementById("empno").value;
+            employees = validate.FormNonEmpty(emp,empno);
+            get_emp = empLogic.getEmployees();
+
+            return_val = validate.UniqueValue(empno,get_emp)
+            var emp = {
+                EmpNo: parseInt(document.getElementById('empno').value),
+                EmpName:  document.getElementById('empname').value,
+                DeptName: document.getElementById('deptname').value,
+                Salary:parseInt(document.getElementById('empsal').value)
+            };
+            if (employees && return_val){
+                add_emp = empLogic.addEmployee(emp);
+                if(add_emp){
+                    alert("Employee added succesfully")
+                    showtable()
+                  
+                }
+            }
+            else {
+                alert("Fill the form proper")
+            }
+        }
+        function RemoveData(){
+            remove_list = []
+            var inputElements = document.getElementsByClassName('checkbox')
+            for(var i=0; inputElements[i]; ++i){
+                if(inputElements[i].checked){
+                    remove_list.push(parseInt(inputElements[i].value));
+                }
+            }
+            if(remove_list){
+                add_emp = empLogic.DelEmployees(remove_list);
+                showtable()
+            }
+            else{
+                alert("Please select for remove")
+            }
+            
+
+        }
+        function showtable(){
+            var opt = ""
+            get_emp = empLogic.getEmployees();
+            opt += '<table class="table table-bordered"><tr><th>Index</th><th>EmpNo</th><th>EmpName</th><th>DeptName</th><th>Salary</th></tr>'
+
+            for(var i=0; i< get_emp.length; i++) {
+                opt+= '<tr><td>'+i+' <input type="checkbox" class="checkbox" value ='+ i+'></td><td>'+get_emp[i]['EmpNo']+'</td>'+ '<td>'+get_emp[i]['EmpName']+'</td>' + '<td>'+get_emp[i]['DeptName']+'</td>' + '</td>'+'<td>'+get_emp[i]['Salary']+'</td></tr>';
+            }
+            opt +='</table>'
+            document.getElementById('table_row').innerHTML = opt
+        }
+        function clearInputs(){
+            var inputs =  document.getElementsByTagName('input');
+            for(var i=0; i< inputs.length; i++) {
+                inputs[i].value = "";
+            }
+        }
+        function updatedata(){
+            var emp = {
+                EmpNo: parseInt(document.getElementById('empno').value),
+                EmpName:  document.getElementById('empname').value,
+                DeptName: document.getElementById('deptname').value,
+                Salary:parseInt(document.getElementById('empsal').value)
+            };
+            upadate_emp = empLogic.UpdateEmployees(emp);
+            if(upadate_emp){
+                alert("Record Updated")
+                showtable()
+            }
+            else{
+                alert("Record not Found")
+            }
+           
+        }
+    </script>
+</head>
+<body>
+    <div class="card text-center" style="width: 30rem;">
+        <div class="container">
+            <div class="row">
+                <h5><b>The Employee Information System</b></h5>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>EmpNo</td>
+                            <td>
+                                <input class="form-control" type="text" id="empno">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>EmpName</td>
+                            <td>
+                                <input  class="form-control" type="text" id="empname">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>DeptName</td>
+                            <td>
+                                <select class="form-control"  id="deptname">
+                                    <option value="IT">IT</option>
+                                    <option value="HRD">HRD</option>
+                                    <option value="ACCOUNTS">ACCOUNTS</option>
+                                    <option value="SALES">SALES</option>
+                                    <option value="TRAINING">TRAINING</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Salary</td>
+                            <td>
+                                <input class="form-control" type="text" id="empsal">
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Action</td>
+                            <td>
+                                <button id="btnclear" class="btn btn-warning">Clear</button>
+                                <button id="btnsave" class="btn btn-warning">Save</button>
+                                <button id="btnupdate" class="btn btn-success">Update</button>
+                                <button id="delbtn" class="btn btn-danger">Delete</button>
+                            </td>
+
+                        </tr>
+                    </tfoot>
+                </table>
+                <hr>
+                <div id ="table_row"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

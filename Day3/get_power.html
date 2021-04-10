@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+         window.onload = function(){
+            document.getElementById("string_name").style.visibility = "hidden";
+
+        }
+         function sort(){
+            var result_string = ""
+            var ip_string = document.getElementById("input_array").value;
+            var input_array = ip_string.split(",")
+            var pow_of = input_array[0]
+            document.getElementById("string_name").style.visibility = "visible";
+            for (i=0;i<input_array.length-1;i++){
+                    //result_string = result_string +pow_of
+                    var pow_of = Math.pow(input_array[i], input_array[i+1])
+                    result_string = result_string +input_array[i]+'<sup>'+input_array[i+1]+'</sup>'+" = "+pow_of+'</br>'
+
+                
+            }
+            document.getElementById("string_name").style.visibility = "visible";
+            document.getElementById("result").innerHTML  = result_string;
+        }
+
+    </script>
+</head>
+
+<body>
+    <div align="center">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">
+                Power of Elements
+            </div>
+            <div class="card-body">
+            <div class="card-title"><input type="text" id="input_array" placeholder="Enter Array Input"></div>
+            <input type="button" class="btn btn-warning" value="Power" onclick="sort()">
+            <div class="card-title" id ="string_name"><h5>Power of Element</h5></div>
+            <div class="card-title" id ="result"></div>
+            </div>
+            <div class="card-footer text-muted">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

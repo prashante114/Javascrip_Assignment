@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+         function get_date_diff(){
+            var d1 = (document.getElementById("from_date").value).split(',');
+            var d2 =  (document.getElementById("to_date").value).split(',');
+            var dt1 = new Date(d1[0],d1[1],d1[2],d1[3],d1[4],d1[5]);
+            var dt2 = new Date(d2[0],d2[1],d2[2],d2[3],d2[4],d2[5]);
+            var diff = Math.abs(dt1 - dt2)/1000;
+            var years = Math.floor(diff/31536000);
+            var months = Math.floor((diff - years * 365*60*60*24)/(30*60*60*24))
+            var days = Math.floor((diff - years * 365*60*60*24 - months*30*60*60*24)/(60*60*24));
+            var hours = Math.floor((diff - years *365*60*60*24 -months*30*60*60*24 - days*60*60*24)/(60*60))
+            var minutes = Math.floor((diff - years * 365*60*60*24 -months*30*60*60*24 -days*60*60*24 - hours*60*60)/ 60);
+            var seconds = Math.floor((diff - years * 365*60*60*24 - months*30*60*60*24 - days*60*60*24 - hours*60*60 - minutes*60)) 
+            
+            var date_foarmat ="<h4>"+ years +" Years, "+months+" Months,"+days+" Days,"+hours+" Hours,"+minutes+" Minutes,"+seconds+" Seconds"+"</h4>"
+            document.getElementById("result").innerHTML  = date_foarmat;
+         }
+
+    </script>
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <td align="center">
+                        <div class="col-md-1">Date 1</div>
+                        <div class="col-md-2"><h7>YYYY:DD:MM:HH:MM:SS</h7></div>
+                        <div class="col-md-8"><input type="text" id="from_date" placeholder="From Date" value="1980,01,01,01,30,50"></div>
+                        <div class="col-md-1"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <div class="col-md-1">Date 2</div>
+                        <div class="col-md-2"><h7>YYYY:DD:MM:HH:MM:SS</h7></div>
+                        <div class="col-md-8"><input type="text" id="to_date" placeholder="To Date" value="1980,01,01,01,30,20"></div>
+                        <div class="col-md-1"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8"><input type="button" class="btn btn-warning" value="Date Diffrence" onclick="get_date_diff()"></div>
+                        <div class="col-md-2"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8" id="result"></div>
+                        <div class="col-md-2"></div>
+                    </td>
+                </tr>
+                
+            
+            </table>
+        </div>
+    </div>
+</body>
+</html>

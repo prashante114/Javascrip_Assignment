@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Referencing the exsternal CSS-->
+        <link rel="stylesheet" href="./dynamicclass.css">
+        <script>
+            function load(){
+            var tableRows = document.getElementsByTagName('tr');
+                for (var i = 1; i < tableRows.length; i += 1) {
+                    var selected_td = tableRows[i].getElementsByTagName('td')
+                    if(selected_td[2].innerText == 'Sales'){
+                        tableRows[i].className = 'sales';
+                    }
+                    else if(selected_td[2].innerText == 'Hr'){
+                        tableRows[i].className = 'hr';
+                    }
+                    else if(selected_td[2].innerText == 'Accounts'){
+                        tableRows[i].className = 'accounts';
+                    }
+                    else if(selected_td[2].innerText == 'IT'){
+                        tableRows[i].className = 'it';
+                    }
+                   
+                    
+                }
+
+            }
+    
+            window.onload = load;
+        </script>
+    </head>
+    <body>
+        <h2>Basic HTML Table</h2>
+        <table style='border:double'>
+            <tr>
+                <th>Emp NO</th>
+                <th>Emp Name</th> 
+                <th>Department</th>
+            </tr>
+            <tr>
+                <td>E-1001</td>
+                <td >Prashant Joshi</td>
+                <td>Sales</td>
+            </tr>
+            <tr>
+                <td>E-1011 </td>
+                <td>Indrajeet L</td>
+                <td>Hr</td>
+            </tr>
+            <tr>
+                <td>E-1012</td>
+                <td>Chakshu</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td>E-1013</td>
+                <td>Ranjan F</td>
+                <td>Accounts</td>
+            </tr>
+        </table>
+
+    </body>
+</html>

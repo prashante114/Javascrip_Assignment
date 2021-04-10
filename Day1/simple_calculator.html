@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function operation(val)
+            {
+                document.getElementById("result").value+=val
+            }
+        function calculation()
+            {
+                let x = document.getElementById("result").value
+                let y = eval(x)
+                document.getElementById("result").value = y
+            }
+        function clr()
+            {
+                document.getElementById("result").value = " "
+            }
+    </script>
+</head>
+<body>
+    <table border="2">
+        <td colspan="4"><input type="text" id="result"/></td>
+        <tr>
+            <td><input type="button" value="1" onclick="operation('1')"/> </td>
+            <td><input type="button" value="2" onclick="operation('2')"/> </td>
+            <td><input type="button" value="3" onclick="operation('3')"/> </td>
+            <td><input type="button" value="+" onclick="operation('+')"/> </td>
+            
+        </tr>
+        <tr>
+            <td><input type="button" value="4" onclick="operation('4')"/> </td>
+            <td><input type="button" value="5" onclick="operation('5')"/> </td>
+            <td><input type="button" value="6" onclick="operation('6')"/> </td>
+            <td><input type="button" value="-" onclick="operation('-')"/> </td>
+        </tr>
+        <tr>
+            <td><input type="button" value="7" onclick="operation('7')"/> </td>
+            <td><input type="button" value="8" onclick="operation('8')"/> </td>
+            <td><input type="button" value="9" onclick="operation('9')"/> </td>
+            <td><input type="button" value="x" onclick="operation('*')"/> </td>
+        </tr>
+        <tr>
+            <td><input type="button" value="0" onclick="operation('0')"/> </td>
+            <td><input type="button" value="c" onclick="clr()"/> </td>
+            <td><input type="button" value="=" onclick="calculation('=')"/> </td>
+            <td><input type="button" value="/" onclick="operation('/')"/> </td>
+        </tr>
+       
+    </table>
+    
+</body>
+</html>

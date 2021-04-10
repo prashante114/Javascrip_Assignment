@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="./ProductFormLogic.js"></script>
+        <script src="./validate.js"></script>
+        <script src="./ui.js"></script>
+        <script>
+            function presenter(){
+                var data = [];
+                product_logic = new get_product_logic();
+                ui = new generateUI();
+                validate = new ValidateForm()
+                //get record from from local storage data 
+                var storage_key = product_logic.getStorageAllKey()
+                for(var i=0; i< storage_key.length;i++) {
+                    var record_dict = JSON.parse(localStorage.getItem(storage_key[i]))
+                    record_dict['ProductKey'] = storage_key[i]
+                    record_dict['Delete'] = "<input type='checkbox' class='checkbox' value ="+storage_key[i]+'>'
+                    data.push(JSON.stringify(record_dict));
+                }
+                //pass data to table function and create table for that dynamicaly
+                var product_table = ui.table(data)
+                document.getElementById('table_row').innerHTML = product_table
+
+                document.getElementById('btnsave').addEventListener('click',function(){
+                    //validation
+                    flag = validate.FormNonEmpty()
+                    unique_flag = validate.ProductNameUnique(storage_key)
+                    if (flag){
+                        if(unique_flag){
+                            //get form value
+                            var form_val = product_logic.getFormValue()
+                            //get last value from key
+                            var product_key = product_logic.getStorageLastKey()
+                            //add value in local storage
+                            localStorage.setItem('PRD-'+product_key,JSON.stringify(form_val));
+                            alert("Product Added Successfully")
+                            window.location.reload()
+                        }
+
+                    }
+                  
+                },false);
+
+                document.getElementById('delbtn').addEventListener('click',function(){
+                    flag = product_logic.delProduct()
+                },false);
+
+                document.getElementById('ProductPrice').addEventListener('keyup', function(){
+                    validate.IsNumeric()
+                },false);
+                document.getElementById('search').addEventListener('keyup', function(){
+                   var serched_list = product_logic.SearchProduct(this.value)
+                   var product_table = ui.table(serched_list)
+                   document.getElementById('table_row').innerHTML = product_table
+                },false);
+               
+
+            
+            };
+            window.onload = presenter;
+
+        </script>
+    </head>
+    <body>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><b>Product Information</b></h5>
+                        <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>Product ID</td>
+                                <td>
+                                    <input class="form-control" type="text" id="ProductId">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Product Name</td>
+                                <td>
+                                    <input  class="form-control" type="text" id="ProductName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Category Name</td>
+                                <td>
+                                    <input type="radio" id="ECT" name="CategoryName" value="ECT">
+                                    <label for="ECT">ECT</label><br>
+                                    <input type="radio" id="ECL" name="CategoryName" value="ECL">
+                                    <label for="ECL">ECL</label><br>
+                                    <input type="radio" id="FOD-FAST" name="CategoryName" value="FOD-FAST">
+                                    <label for="FOD-FAST">FOD-FAST</label><br>
+                                    <input type="radio" id="FOD-DRK" name="CategoryName" value="FOD-DRK">
+                                    <label for="FOD-DRK">FOD-DRK</label><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Manufacturer</td>
+                                <td>
+                                    <input type="radio" id="HP" name="Manufacturer" value="HP">
+                                    <label for="HP">HP</label><br>
+                                    <input type="radio" id="IBM" name="Manufacturer" value="IBM">
+                                    <label for="ECL">IBM</label><br>
+                                    <input type="radio" id="TATA" name="Manufacturer" value="TATA">
+                                    <label for="FOD-FAST">TATA</label><br>
+                                    <input type="radio" id="BAJAJ" name="Manufacturer" value="BAJAJ">
+                                    <label for="BAJAJ">BAJAJ</label><br>
+                                    <input type="radio" id="PARLE" name="Manufacturer" value="PARLE">
+                                    <label for="PARLE">PARLE</label><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Product Description</td>
+                                <td>
+                                    <input  class="form-control" type="text" id="Description">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Product Price</td>
+                                <td>
+                                    <input  class="form-control" type="text" id="ProductPrice">
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Action</td>
+                                <td>
+                                    <button id="btnsave" class="btn btn-warning">Add Product</button>
+                                    <button id="delbtn" class="btn btn-warning">Delete Product</button>
+                                </td>
+                                
+                            </tr>
+                        </tfoot>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <div> <input  class="form-control" type="text" id="search" placeholder="Search"></div>
+                        <div id ="table_row"></div>
+                        
+                    </div>
+                </div>
+            </div>
+    </body>
+</html>

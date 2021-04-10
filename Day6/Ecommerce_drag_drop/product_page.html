@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="./ProductLogic.js"></script>
+        <script src="./ui.js"></script>
+        <script>
+            window.onload = function(){
+                ui = new generateUI();
+                crateDatabase()
+                LoadData()
+                product_logic = new get_product_logic();
+                product_logic.ProductDrag()
+                orderSummery()
+                document.getElementById('btnsave').addEventListener('click',function(){
+                    RemoveData()
+                },false);
+                
+                document.getElementById('btnbill').addEventListener('click',function(){
+                    generateBill()
+                
+                },false);
+                
+            }
+        </script>
+    </head>
+        <body>
+            <div class="container">
+                <div class="row">
+                  <div class="col">
+                      <h5>Product List</h5>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">ProductId</th>
+                            <th scope="col">ProductName</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">ProductPrice</th>
+                            <th scope="col">Manufacturer</th>
+                            <th scope="col">CategoryName</th>
+                            <th scope="col">ProductKey</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr draggable="true" name="productRow" id="1">
+                            <td >T-1000</td>
+                            <td>hh</td>
+                            <td>hhh</td>
+                            <td>20000</td>
+                            <td>TATA</td>
+                            <td>ECT</td>
+                            <td>PRD-103	</td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                  </div>
+                  <div class="col">
+                    <h5>Purchase Product</h5>
+                    <div id = "target_table"></div>
+                    <div><button id="btnsave" class="btn btn-warning">Remove</button> <button id="btnbill" class="btn btn-danger">Bill</button></div>
+                    <hr></hr>
+                    <h5>Bill</h5>
+                    <div id = "bill_table"></div>
+                  </div>
+                </div>
+            </div>
+        </body>
+</html>
